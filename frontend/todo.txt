@@ -1,0 +1,4 @@
+- create avaliable workouts list to user
+- create user's schedule list and it's scheduled workouts
+- create display showing admin which users are scheduled to a given workout
+- create navigation menu
