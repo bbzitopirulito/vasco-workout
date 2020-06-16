@@ -9,8 +9,13 @@ const AdminSchedule = () => {
     const [date, setDate] = useState(new Date())
     const [workouts, setWorkouts] = useState([])
 
-    const schedule = async () => {
-
+    const createSchedule = async () => {
+        await api.post('/newschedule', {
+            date
+        }).then((res) => {
+            setWorkouts([...workouts, res.data])
+            alert(typeof res.data === 'object' ? 'Aula marcada!' : 'Não foi possível marcar sua aula')
+        })
     }
 
     const cancelWorkout = async (id) => {
@@ -60,7 +65,7 @@ const AdminSchedule = () => {
                     />
                 </div>
                 <div className="adminScheduleButton">
-                    <Button color='primary' onClick={() => schedule()}>Marcar</Button>
+                    <Button color='primary' onClick={() => createSchedule()}>Criar</Button>
                 </div>
             </div>
         </div>

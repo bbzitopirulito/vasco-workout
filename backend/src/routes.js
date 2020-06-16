@@ -20,5 +20,6 @@ routes.post('/newuser', UserController.store);
 routes.get('/user', UserController.getUser);
 routes.get('/schedules', ScheduleController.getSchedules)
 routes.delete('/deleteschedule', ScheduleController.deleteSchedule)
+routes.put('/scheduleuser', ScheduleController.scheduleUser)
 
 module.exports = routes;

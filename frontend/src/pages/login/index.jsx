@@ -21,7 +21,7 @@ const Login = () => {
                 }
             }).then((res) => {
                 if (typeof res.data === 'object') {
-                    localStorage.setItem('user', res._id)
+                    localStorage.setItem('user', res.data._id)
                     history.push('/schedule')             
                 } else alert('user not found')
             })
