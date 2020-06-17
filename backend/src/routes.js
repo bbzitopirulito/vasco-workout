@@ -21,5 +21,6 @@ routes.get('/user', UserController.getUser);
 routes.get('/schedules', ScheduleController.getSchedules)
 routes.delete('/deleteschedule', ScheduleController.deleteSchedule)
 routes.put('/scheduleuser', ScheduleController.scheduleUser)
+routes.put('/unscheduleuser', ScheduleController.unscheduleUser)
 
 module.exports = routes;

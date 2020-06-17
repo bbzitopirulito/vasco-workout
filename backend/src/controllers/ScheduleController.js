@@ -32,34 +32,34 @@ module.exports = {
     async scheduleUser(req, res) {
         const { userId, scheduleId } = req.body;
 
-        const user = await User.findOne( {_id: {$ne: userId}} )
-        const scheduledUsers = await Schedule.findOne({_id: {$ne: scheduleId}})
+        const user = await User.findById(userId)
+        const schedule = await Schedule.findById(scheduleId)
 
-        // console.log(user)
-        // console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
-        // console.log(scheduledUsers)
-                
-        // await Schedule.updateOne({_id:scheduleId}, {
-        //     $set: { users: scheduledUsers.length > 0 ? [...scheduledUsers.users, {
-        //         _id: user._id,
-        //         username: user.username
-        //     }] : [{ _id: user._id, username: user.username }] }
-        // });  
-        console.log('here')
-        console.log(scheduleId)
+        if (schedule.users.filter(f => f._id === userId).length === 0) {
+            await Schedule.updateOne({_id:scheduleId}, {
+                $push: { users: { _id: user._id, username: user.username } }
+            });       
+            const updatedSchedule = await Schedule.findById(scheduleId)
 
+            return res.json(updatedSchedule);            
+        } else {
+            return res.json(false)
+        }
+    },
+
+    async unscheduleUser(req, res) {
+        const { userId, scheduleId } = req.body;
+
+        const user = await User.findById(userId)
+        const schedule = await Schedule.findById(scheduleId)
+
+        
         await Schedule.updateOne({_id:scheduleId}, {
-            $push: { users: user }
+            $pullAll: { users: [{ _id: user._id, username: user.username }] }
         });       
-
         const updatedSchedule = await Schedule.findById(scheduleId)
 
-        // const user = await User.findById(user_id);
-
-        console.log(updatedSchedule)
-
         return res.json(updatedSchedule);            
-           
     }
     
 };

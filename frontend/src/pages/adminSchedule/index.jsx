@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DateTimePicker from 'react-datetime-picker'
 import { Button, Table } from 'reactstrap'
 import api from '../../services/api.js'
+import Dropdown from 'react-bootstrap/Dropdown'
 
 import './index.scss'
 
@@ -24,8 +25,6 @@ const AdminSchedule = () => {
         })
 
         setWorkouts(workouts.filter((item) => item._id !== id))
-
-        console.log(deleted.data)
     }
 
     useEffect(async () => {
@@ -43,6 +42,7 @@ const AdminSchedule = () => {
                                 <tr>
                                     <th>Dia</th>
                                     <th>Hora</th>
+                                    <th>Pessoas</th>
                                     <th>Mudar</th>
                                 </tr>
                             </thead>
@@ -51,6 +51,21 @@ const AdminSchedule = () => {
                                 <tr id={k}>
                                     <td>{new Date(item.date).getDate()}/{new Date(item.date).getMonth()}/{new Date(item.date).getFullYear()}</td>
                                     <td>{new Date(item.date).getHours()}</td>
+                                    <td>
+                                        <Dropdown>
+                                            <Dropdown.Toggle id="dropdown-basic">
+                                                Pessoas
+                                            </Dropdown.Toggle>
+
+                                            <Dropdown.Menu>
+                                                {item.users.length > 0 ? item.users.map((user,k) => 
+                                                    <Dropdown.Item id={k}>{user.username}</Dropdown.Item>
+                                                ) : 
+                                                    <Dropdown.Item>Aula vazia</Dropdown.Item>
+                                                }
+                                            </Dropdown.Menu>
+                                        </Dropdown> 
+                                    </td>
                                     <td><Button color="danger" onClick={() => cancelWorkout(item._id)}>Cancelar</Button></td>
                                 </tr>
                             )}

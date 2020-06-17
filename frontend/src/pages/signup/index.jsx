@@ -15,7 +15,6 @@ const SignUp = () => {
             role: 'user',
             workouts: [],
         }).then((user) => {
-            console.log(user)
             history.push('/login')
         })
     }

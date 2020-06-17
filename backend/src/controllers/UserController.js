@@ -28,8 +28,7 @@ module.exports = {
     },
 
     async getUser(req, res) {
-        const { username, password } = req.headers;  
-        console.log(req.headers)      
+        const { username, password } = req.headers;        
 
         const user = await User.findOne().where('username').equals(username).where('password').equals(password);
 
