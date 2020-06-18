@@ -2,4 +2,4 @@
 - create user's schedule list and it's scheduled workouts - done
 - create display showing admin which users are scheduled to a given workout - done
 - create navigation menu
-- create simple menu
+- fix some bugs

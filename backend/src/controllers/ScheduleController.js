@@ -4,10 +4,12 @@ const User = require('../models/User');
 module.exports = {
     async store(req, res) {
         const { date } = req.body; 
+
         
         let ndate = new Date(date)
-
-        ndate = ndate.setHours(ndate.getHours() + 1)
+        
+        ndate = ndate.setMonth(ndate.getMonth() + 1)
+        console.log(ndate)
 
         let schedule = await Schedule.create({ 
             date: ndate,            

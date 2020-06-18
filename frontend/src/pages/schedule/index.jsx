@@ -2,6 +2,7 @@ import api from '../../services/api.js';
 import React, { useState, useEffect } from 'react'
 import DateTimePicker from 'react-datetime-picker';
 import { Button, Table } from 'reactstrap'
+import Menu from '../../components/menu/index.js'
 
 import './index.scss'
 
@@ -45,32 +46,35 @@ const Schedule = () => {
     }
 
     return(
-        <div className="scheduleWrapper">
-            <div className="schedule">
-                <div className="workouts">
-                    <div className="workout">
-                        <Table>
-                            <thead>
-                                <tr>
-                                    <th>Dia</th>
-                                    <th>Hora</th>
-                                    <th>Disponibilidade</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {workouts.length > 0 && workouts.map((item, k) => 
-                                <tr id={k}>
-                                    <td>{new Date(item.date).getDate()}/{new Date(item.date).getMonth()}/{new Date(item.date).getFullYear()}</td>
-                                    <td>{new Date(item.date).getHours()}</td>
-                                    <td>{item.users.filter(f => f._id === userId).length > 0 ? <Button color="danger" onClick={() => unscheduleUser(item._id)}>Desmarcar</Button> : <Button color="primary" onClick={() => scheduleUser(item._id)}>Marcar</Button>}</td>                                
-                                </tr>
-                            )}
-                            </tbody>
-                        </Table>
+        <>
+            <Menu />
+            <div className="scheduleWrapper">
+                <div className="schedule">
+                    <div className="workouts">
+                        <div className="workout">
+                            <Table>
+                                <thead>
+                                    <tr>
+                                        <th>Dia</th>
+                                        <th>Hora</th>
+                                        <th>Disponibilidade</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {workouts.length > 0 && workouts.map((item, k) => 
+                                    <tr id={k}>
+                                        <td>{new Date(item.date).getDate()}/{new Date(item.date).getMonth()}/{new Date(item.date).getFullYear()}</td>
+                                        <td>{new Date(item.date).getHours()}</td>
+                                        <td>{item.users.filter(f => f._id === userId).length > 0 ? <Button color="danger" onClick={() => unscheduleUser(item._id)}>Desmarcar</Button> : <Button color="primary" onClick={() => scheduleUser(item._id)}>Marcar</Button>}</td>                                
+                                    </tr>
+                                )}
+                                </tbody>
+                            </Table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 
