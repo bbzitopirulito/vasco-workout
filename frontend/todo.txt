@@ -1,5 +1,5 @@
+TODO: 
 - fix some bugs
-- limit
 - check lint
 - tipo de aula
 - user filter
@@ -7,3 +7,6 @@
 - push notifications via email
 - waiting list
 - group of classes
+
+DONE:
+- limit done
