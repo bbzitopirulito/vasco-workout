@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DateTimePicker from 'react-datetime-picker'
-import { Button, Table } from 'reactstrap'
+import { Button, Table, Input, Label, Container, Row, Col } from 'reactstrap'
 import api from '../../services/api.js'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Menu from '../../components/menu/index.js'
@@ -10,10 +10,12 @@ import './index.scss'
 const AdminSchedule = () => {
     const [date, setDate] = useState(new Date())
     const [workouts, setWorkouts] = useState([])
+    const [limit, setLimit] = useState(6);
 
     const createSchedule = async () => {
         await api.post('/newschedule', {
-            date
+            date,
+            limit
         }).then((res) => {
             setWorkouts([...workouts, res.data])
             alert(typeof res.data === 'object' ? 'Aula marcada!' : 'Não foi possível marcar sua aula')
@@ -45,6 +47,7 @@ const AdminSchedule = () => {
                                         <th>Dia</th>
                                         <th>Hora</th>
                                         <th>Pessoas</th>
+                                        <th>Limite</th>
                                         <th>Mudar</th>
                                     </tr>
                                 </thead>
@@ -68,6 +71,7 @@ const AdminSchedule = () => {
                                                 </Dropdown.Menu>
                                             </Dropdown> 
                                         </td>
+                                        <td>{item.limit}</td>
                                         <td><Button color="danger" onClick={() => cancelWorkout(item._id)}>Cancelar</Button></td>
                                     </tr>
                                 )}
@@ -75,11 +79,19 @@ const AdminSchedule = () => {
                             </Table>
                         </div>
                     </div>
-                    <div className="adminSchedule">
-                        <DateTimePicker
-                            onChange={(date) => setDate(date)}
-                            value={date}
-                        />
+                    <div className="admin-schedule">
+                        <Row className='align-items-end'>
+                            <Col>
+                                <DateTimePicker
+                                    onChange={(date) => setDate(date)}
+                                    value={date}
+                                />
+                            </Col>
+                            <Col>
+                                <Label for="password">Limite de pessoas</Label>
+                                <Input onChange={(e) => setLimit(e.target.value)} value={limit} />
+                            </Col>
+                        </Row>
                     </div>
                     <div className="adminScheduleButton">
                         <Button color='primary' onClick={() => createSchedule()}>Criar</Button>

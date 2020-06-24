@@ -9,7 +9,7 @@ import {
 import Schedule from './pages/schedule'
 import Login from './pages/login'
 import SignUp from './pages/signup'
-import AdminSchedule from './pages/adminSchedule'
+import AdminSchedule from './pages/admin-schedule'
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
         <Route path="/schedule">
           <Schedule />
         </Route>
-        <Route path="/adminSchedule">
+        <Route path="/admin-schedule">
           <AdminSchedule />
         </Route>
       </Switch>

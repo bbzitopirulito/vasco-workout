@@ -8,6 +8,7 @@ const SignUp = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     let history = useHistory()
+    
     const createAccount = async () => {
         await api.post('/newuser', {
             username,

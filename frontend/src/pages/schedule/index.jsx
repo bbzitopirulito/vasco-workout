@@ -1,6 +1,5 @@
 import api from '../../services/api.js';
 import React, { useState, useEffect } from 'react'
-import DateTimePicker from 'react-datetime-picker';
 import { Button, Table } from 'reactstrap'
 import Menu from '../../components/menu/index.js'
 
@@ -17,13 +16,13 @@ const Schedule = () => {
         setUserId(localStorage.getItem('user'))
     }, [])
 
-    const scheduleUser = async (scheduleId) => {
-        let schedule = await api.put('/scheduleuser', {
-            userId, scheduleId
+    const scheduleUser = async (schedule) => {
+        let scheduled = await api.put('/scheduleuser', {
+            userId, scheduleId:schedule._id
         })
         setWorkouts(workouts.map(f => {
-            if (f._id === schedule.data._id) {
-                f.users = schedule.data.users
+            if (f._id === scheduled.data._id) {
+                f.users = scheduled.data.users
                 return f;
             } else {
                 return f;
@@ -65,7 +64,7 @@ const Schedule = () => {
                                     <tr id={k}>
                                         <td>{new Date(item.date).getDate()}/{new Date(item.date).getMonth()}/{new Date(item.date).getFullYear()}</td>
                                         <td>{new Date(item.date).getHours()}</td>
-                                        <td>{item.users.filter(f => f._id === userId).length > 0 ? <Button color="danger" onClick={() => unscheduleUser(item._id)}>Desmarcar</Button> : <Button color="primary" onClick={() => scheduleUser(item._id)}>Marcar</Button>}</td>                                
+                                        <td>{!item.users.filter(u => u._id === userId).length > 0 && item.limit <= item.users.length ? 'Aula cheia' : item.users.filter(f => f._id === userId).length > 0 ? <Button color="danger" onClick={() => unscheduleUser(item._id)}>Desmarcar</Button> : <Button color="primary" onClick={() => scheduleUser(item)}>Marcar</Button>}</td>                                
                                     </tr>
                                 )}
                                 </tbody>

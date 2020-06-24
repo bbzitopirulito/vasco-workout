@@ -3,7 +3,7 @@ const User = require('../models/User');
 
 module.exports = {
     async store(req, res) {
-        const { date } = req.body; 
+        const { date, limit } = req.body; 
 
         
         let ndate = new Date(date)
@@ -12,7 +12,8 @@ module.exports = {
         console.log(ndate)
 
         let schedule = await Schedule.create({ 
-            date: ndate,            
+            date: ndate,  
+            limit          
         })
         return res.json(schedule);                     
     },
@@ -53,8 +54,6 @@ module.exports = {
         const { userId, scheduleId } = req.body;
 
         const user = await User.findById(userId)
-        const schedule = await Schedule.findById(scheduleId)
-
         
         await Schedule.updateOne({_id:scheduleId}, {
             $pullAll: { users: [{ _id: user._id, username: user.username }] }

@@ -12,7 +12,7 @@ const Login = () => {
     let history = useHistory()
 
     const login = async () => {
-        if (username === 'admin' && password === 'admin') history.push('/adminSchedule')
+        if (username === 'admin' && password === 'admin') history.push('/admin-schedule')
         else {
             await api.get('/user', {
                 headers: {

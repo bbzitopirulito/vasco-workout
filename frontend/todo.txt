@@ -1,5 +1,9 @@
-- create avaliable workouts list to user - done
-- create user's schedule list and it's scheduled workouts - done
-- create display showing admin which users are scheduled to a given workout - done
-- create navigation menu
 - fix some bugs
+- limit
+- check lint
+- tipo de aula
+- user filter
+- filter by week
+- push notifications via email
+- waiting list
+- group of classes
