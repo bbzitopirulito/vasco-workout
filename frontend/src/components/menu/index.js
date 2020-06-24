@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Collapse,
   Navbar,
@@ -7,9 +7,8 @@ import {
   Nav,
   NavItem,
   Button,
-  NavbarText
-} from 'reactstrap';
-import { useHistory } from 'react-router-dom';
+} from "reactstrap";
+import { useHistory } from "react-router-dom";
 
 const Menu = (props) => {
   let history = useHistory();
@@ -18,9 +17,9 @@ const Menu = (props) => {
   const toggle = () => setIsOpen(!isOpen);
 
   const logout = () => {
-      localStorage.removeItem('user');
-      history.push('/login')
-  }
+    localStorage.removeItem("user");
+    history.push("/login");
+  };
 
   return (
     <div>
@@ -37,6 +36,6 @@ const Menu = (props) => {
       </Navbar>
     </div>
   );
-}
+};
 
 export default Menu;

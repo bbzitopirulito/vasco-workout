@@ -1,27 +1,30 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const path = require('path');
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const path = require("path");
 
-const http = require('http');
+const http = require("http");
 
-const routes = require('./routes');
+const routes = require("./routes");
 
 const app = express();
 const server = http.Server(app);
 
-mongoose.connect('mongodb+srv://admin:admin@vasco-workout-tg3jx.mongodb.net/test', {
+mongoose.connect(
+  "mongodb+srv://admin:admin@vasco-workout-tg3jx.mongodb.net/test",
+  {
     useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+    useUnifiedTopology: true,
+  }
+);
 
 const connectedUsers = {};
 
 app.use((req, res, next) => {
-    req.connectedUsers = connectedUsers;
+  req.connectedUsers = connectedUsers;
 
-    return next();
-})
+  return next();
+});
 
 app.use(cors());
 app.use(express.json());

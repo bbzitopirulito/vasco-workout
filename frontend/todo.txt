@@ -1,4 +1,6 @@
 TODO: 
+- organize code
+- refactor frontend
 - fix some bugs
 - check lint
 - tipo de aula
