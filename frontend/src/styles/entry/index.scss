@@ -1,0 +1,12 @@
+@import "../variables.scss";
+
+.entry-body {
+  .container {
+    max-width: 420px;
+  }
+  @media screen and (max-width: map-get($breakpoints, xs)) {
+    .container {
+      max-width: 100%;
+    }
+  }
+}

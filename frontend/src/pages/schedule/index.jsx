@@ -1,12 +1,11 @@
 import api from "../../services/api.js";
 import React, { useState, useEffect } from "react";
-import { Button, Table } from "reactstrap";
+import { Button, Table, Container } from "reactstrap";
 import Menu from "../../components/menu/index.js";
 
-import "./index.scss";
+import "../../styles/schedule/index.scss";
 
 const Schedule = () => {
-  const [date, setDate] = useState(new Date());
   const [workouts, setWorkouts] = useState([]);
   const [userId, setUserId] = useState("");
 
@@ -53,56 +52,52 @@ const Schedule = () => {
   return (
     <>
       <Menu />
-      <div className="scheduleWrapper">
-        <div className="schedule">
-          <div className="workouts">
-            <div className="workout">
-              <Table>
-                <thead>
-                  <tr>
-                    <th>Dia</th>
-                    <th>Hora</th>
-                    <th>Disponibilidade</th>
+      <div className="schedule min-vh-100 mt-5 d-flex align-items-baseline justify-content-center">
+        <Container className="border border-secondary rounded">
+          <Table>
+            <thead>
+              <tr>
+                <th>Dia</th>
+                <th>Hora</th>
+                <th>Disponibilidade</th>
+              </tr>
+            </thead>
+            <tbody>
+              {workouts.length > 0 &&
+                workouts.map((item, k) => (
+                  <tr id={k}>
+                    <td>
+                      {new Date(item.date).getDate()}/
+                      {new Date(item.date).getMonth()}/
+                      {new Date(item.date).getFullYear()}
+                    </td>
+                    <td>{new Date(item.date).getHours()}</td>
+                    <td>
+                      {!item.users.filter((u) => u._id === userId).length > 0 &&
+                      item.limit <= item.users.length ? (
+                        "Aula cheia"
+                      ) : item.users.filter((f) => f._id === userId).length >
+                        0 ? (
+                        <Button
+                          color="danger"
+                          onClick={() => unscheduleUser(item._id)}
+                        >
+                          Desmarcar
+                        </Button>
+                      ) : (
+                        <Button
+                          color="primary"
+                          onClick={() => scheduleUser(item)}
+                        >
+                          Marcar
+                        </Button>
+                      )}
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {workouts.length > 0 &&
-                    workouts.map((item, k) => (
-                      <tr id={k}>
-                        <td>
-                          {new Date(item.date).getDate()}/
-                          {new Date(item.date).getMonth()}/
-                          {new Date(item.date).getFullYear()}
-                        </td>
-                        <td>{new Date(item.date).getHours()}</td>
-                        <td>
-                          {!item.users.filter((u) => u._id === userId).length >
-                            0 && item.limit <= item.users.length ? (
-                            "Aula cheia"
-                          ) : item.users.filter((f) => f._id === userId)
-                              .length > 0 ? (
-                            <Button
-                              color="danger"
-                              onClick={() => unscheduleUser(item._id)}
-                            >
-                              Desmarcar
-                            </Button>
-                          ) : (
-                            <Button
-                              color="primary"
-                              onClick={() => scheduleUser(item)}
-                            >
-                              Marcar
-                            </Button>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </Table>
-            </div>
-          </div>
-        </div>
+                ))}
+            </tbody>
+          </Table>
+        </Container>
       </div>
     </>
   );

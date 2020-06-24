@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
+import { Button, Form, FormGroup, Label, Input, Container } from "reactstrap";
 import { Link, useHistory } from "react-router-dom";
 import api from "../../services/api.js";
-import "./index.scss";
+import "../../styles/entry/index.scss";
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
@@ -17,14 +17,14 @@ const SignUp = () => {
         role: "user",
         workouts: [],
       })
-      .then((user) => {
+      .then(() => {
         history.push("/login");
       });
   };
 
   return (
-    <div className="signupWrapper">
-      <div className="signupContainer">
+    <div className="entry-body bg-light min-vh-100 d-sm-flex align-items-center">
+      <Container className="mw-sm-100 bg-white p-5 border border-light rounded">
         <Form>
           <FormGroup>
             <Label for="username">Username</Label>
@@ -46,18 +46,18 @@ const SignUp = () => {
               placeholder="Sua senha"
             />
           </FormGroup>
-          <FormGroup className="centerJustifier">
+          <FormGroup className="d-flex justify-content-center">
             <Button color="primary" onClick={() => createAccount()}>
               Criar conta
             </Button>
           </FormGroup>
-          <FormGroup className="centerJustifier">
+          <FormGroup className="d-flex justify-content-center">
             <span>
               Já tens uma conta? Faça login <Link to="/login">aqui!</Link>
             </span>
           </FormGroup>
         </Form>
-      </div>
+      </Container>
     </div>
   );
 };

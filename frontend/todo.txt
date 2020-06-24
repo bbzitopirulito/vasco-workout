@@ -1,9 +1,6 @@
 TODO: 
-- organize code
-- refactor frontend
 - fix some bugs
-- check lint
-- tipo de aula
+- type of class
 - user filter
 - filter by week
 - push notifications via email
@@ -11,4 +8,7 @@ TODO:
 - group of classes
 
 DONE:
+- refactor frontend
+- organize code
 - limit done
+- check lint

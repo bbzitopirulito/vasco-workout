@@ -1,20 +1,9 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  FormText,
-  Card,
-  CardBody,
-  CardTitle,
-  CardText,
-} from "reactstrap";
+import { Button, Form, FormGroup, Label, Input, Container } from "reactstrap";
 import { Link, useHistory } from "react-router-dom";
 import api from "../../services/api.js";
 
-import "./index.scss";
+import "../../styles/entry/index.scss";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -43,8 +32,8 @@ const Login = () => {
   };
 
   return (
-    <div className="loginWrapper">
-      <div className="loginContainer">
+    <div className="entry-body bg-light min-vh-100 d-sm-flex align-items-center">
+      <Container className="mw-sm-100 bg-white p-5 border border-light rounded">
         <Form>
           <FormGroup>
             <Label for="username">Username</Label>
@@ -64,7 +53,7 @@ const Login = () => {
               placeholder="Sua senha"
             />
           </FormGroup>
-          <FormGroup className="centerJustifier">
+          <FormGroup className="d-flex justify-content-center">
             <Button
               onClick={() => login()}
               color="primary"
@@ -73,13 +62,13 @@ const Login = () => {
               Login
             </Button>
           </FormGroup>
-          <FormGroup className="centerJustifier">
+          <FormGroup className="d-flex justify-content-center">
             <span>
               Não tens conta? Crie uma <Link to="/">aqui!</Link>
             </span>
           </FormGroup>
         </Form>
-      </div>
+      </Container>
     </div>
   );
 };

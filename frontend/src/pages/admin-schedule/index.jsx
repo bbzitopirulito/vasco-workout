@@ -5,7 +5,7 @@ import api from "../../services/api.js";
 import Dropdown from "react-bootstrap/Dropdown";
 import Menu from "../../components/menu/index.js";
 
-import "./index.scss";
+import "../../styles/schedule/index.scss";
 
 const AdminSchedule = () => {
   const [date, setDate] = useState(new Date());
@@ -43,65 +43,61 @@ const AdminSchedule = () => {
   return (
     <>
       <Menu />
-      <div className="adminScheduleWrapper">
-        <div className="adminScheduleContainer">
-          <div className="workouts">
-            <div className="workout">
-              <Table>
-                <thead>
-                  <tr>
-                    <th>Dia</th>
-                    <th>Hora</th>
-                    <th>Pessoas</th>
-                    <th>Limite</th>
-                    <th>Mudar</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {workouts.length > 0 &&
-                    workouts.map((item, k) => (
-                      <tr id={k}>
-                        <td>
-                          {new Date(item.date).getDate()}/
-                          {new Date(item.date).getMonth()}/
-                          {new Date(item.date).getFullYear()}
-                        </td>
-                        <td>{new Date(item.date).getHours()}</td>
-                        <td>
-                          <Dropdown>
-                            <Dropdown.Toggle id="dropdown-basic">
-                              Pessoas
-                            </Dropdown.Toggle>
+      <div className="schedule min-vh-100 mt-5 d-flex flex-column align-items-baseline">
+        <Container className="admin-container border border-secondary rounded">
+          <Table>
+            <thead>
+              <tr>
+                <th>Dia</th>
+                <th>Hora</th>
+                <th>Pessoas</th>
+                <th>Limite</th>
+                <th>Mudar</th>
+              </tr>
+            </thead>
+            <tbody>
+              {workouts.length > 0 &&
+                workouts.map((item, k) => (
+                  <tr id={k}>
+                    <td>
+                      {new Date(item.date).getDate()}/
+                      {new Date(item.date).getMonth()}/
+                      {new Date(item.date).getFullYear()}
+                    </td>
+                    <td>{new Date(item.date).getHours()}</td>
+                    <td>
+                      <Dropdown>
+                        <Dropdown.Toggle id="dropdown-basic">
+                          Pessoas
+                        </Dropdown.Toggle>
 
-                            <Dropdown.Menu>
-                              {item.users.length > 0 ? (
-                                item.users.map((user, k) => (
-                                  <Dropdown.Item id={k}>
-                                    {user.username}
-                                  </Dropdown.Item>
-                                ))
-                              ) : (
-                                <Dropdown.Item>Aula vazia</Dropdown.Item>
-                              )}
-                            </Dropdown.Menu>
-                          </Dropdown>
-                        </td>
-                        <td>{item.limit}</td>
-                        <td>
-                          <Button
-                            color="danger"
-                            onClick={() => cancelWorkout(item._id)}
-                          >
-                            Cancelar
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </Table>
-            </div>
-          </div>
-          <div className="admin-schedule">
+                        <Dropdown.Menu>
+                          {item.users.length > 0 ? (
+                            item.users.map((user, k) => (
+                              <Dropdown.Item id={k}>
+                                {user.username}
+                              </Dropdown.Item>
+                            ))
+                          ) : (
+                            <Dropdown.Item>Aula vazia</Dropdown.Item>
+                          )}
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </td>
+                    <td>{item.limit}</td>
+                    <td>
+                      <Button
+                        color="danger"
+                        onClick={() => cancelWorkout(item._id)}
+                      >
+                        Cancelar
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+          <Container fluid className="my-3">
             <Row className="align-items-end">
               <Col>
                 <DateTimePicker
@@ -117,13 +113,13 @@ const AdminSchedule = () => {
                 />
               </Col>
             </Row>
-          </div>
-          <div className="adminScheduleButton">
+          </Container>
+          <Container fluid className="d-flex justify-content-center my-3">
             <Button color="primary" onClick={() => createSchedule()}>
               Criar
             </Button>
-          </div>
-        </div>
+          </Container>
+        </Container>
       </div>
     </>
   );
