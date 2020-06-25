@@ -54,11 +54,7 @@ const Login = () => {
             />
           </FormGroup>
           <FormGroup className="d-flex justify-content-center">
-            <Button
-              onClick={() => login()}
-              color="primary"
-              onClick={() => login()}
-            >
+            <Button onClick={() => login()} color="primary">
               Login
             </Button>
           </FormGroup>

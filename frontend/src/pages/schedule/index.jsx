@@ -9,10 +9,14 @@ const Schedule = () => {
   const [workouts, setWorkouts] = useState([]);
   const [userId, setUserId] = useState("");
 
-  useEffect(async () => {
-    let workoutsList = await api.get("/schedules");
-    setWorkouts(workoutsList.data);
-    setUserId(localStorage.getItem("user"));
+  useEffect(() => {
+    const getWorkouts = async () => {
+      let workoutsList = await api.get("/schedules");
+      setWorkouts(workoutsList.data);
+      setUserId(localStorage.getItem("user"));
+    };
+
+    getWorkouts();
   }, []);
 
   const scheduleUser = async (schedule) => {
@@ -65,7 +69,7 @@ const Schedule = () => {
             <tbody>
               {workouts.length > 0 &&
                 workouts.map((item, k) => (
-                  <tr id={k}>
+                  <tr key={k}>
                     <td>
                       {new Date(item.date).getDate()}/
                       {new Date(item.date).getMonth()}/

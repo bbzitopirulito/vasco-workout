@@ -17,8 +17,12 @@ const SignUp = () => {
         role: "user",
         workouts: [],
       })
-      .then(() => {
-        history.push("/login");
+      .then((res) => {
+        if (!res.data) {
+          alert("Não foi possível criar conta. Tente fazer login");
+        } else {
+          history.push("/login");
+        }
       });
   };
 

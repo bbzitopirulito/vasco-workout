@@ -15,7 +15,7 @@ module.exports = {
       });
       return res.json(user);
     }
-    return res.json("exists");
+    return res.json(false);
   },
 
   async showById(req, res) {
@@ -36,7 +36,7 @@ module.exports = {
       .equals(password);
 
     if (!user) {
-      return res.json("does not exist");
+      return res.json(false);
     }
 
     return res.json(user);
@@ -50,7 +50,7 @@ module.exports = {
     if (user) {
       return res.json(user);
     }
-    return res.json("null");
+    return res.json(false);
   },
 
   async update(req, res) {
@@ -76,7 +76,7 @@ module.exports = {
 
       return res.json(user);
     } else {
-      return res.json("Username or password already used by another user.");
+      return res.json(false);
     }
   },
 
@@ -87,7 +87,7 @@ module.exports = {
       .where("_id")
       .equals(user_id)
       .then(() => {
-        return res.json("deleted");
+        return res.json(true);
       });
   },
 };

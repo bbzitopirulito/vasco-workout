@@ -35,9 +35,13 @@ const AdminSchedule = () => {
     setWorkouts(workouts.filter((item) => item._id !== id));
   };
 
-  useEffect(async () => {
-    let workoutsList = await api.get("/schedules");
-    setWorkouts(workoutsList.data);
+  useEffect(() => {
+    const getWorkouts = async () => {
+      let workoutsList = await api.get("/schedules");
+      setWorkouts(workoutsList.data);
+    };
+
+    getWorkouts();
   }, []);
 
   return (
