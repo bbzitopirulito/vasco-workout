@@ -3,8 +3,6 @@ import React, { useState, useEffect } from "react";
 import { Button, Table, Container } from "reactstrap";
 import Menu from "../../components/menu/index.js";
 
-import "../../styles/schedule/index.scss";
-
 const Schedule = () => {
   const [workouts, setWorkouts] = useState([]);
   const [userId, setUserId] = useState("");
@@ -57,12 +55,13 @@ const Schedule = () => {
     <>
       <Menu />
       <div className="schedule min-vh-100 mt-5 d-flex align-items-baseline justify-content-center">
-        <Container className="border border-secondary rounded">
-          <Table>
+        <Container>
+          <Table className="border border-secondary rounded">
             <thead>
               <tr>
                 <th>Dia</th>
                 <th>Hora</th>
+                <th>Tipo</th>
                 <th>Disponibilidade</th>
               </tr>
             </thead>
@@ -76,6 +75,7 @@ const Schedule = () => {
                       {new Date(item.date).getFullYear()}
                     </td>
                     <td>{new Date(item.date).getHours()}</td>
+                    <td>{item.type}</td>
                     <td>
                       {!item.users.filter((u) => u._id === userId).length > 0 &&
                       item.limit <= item.users.length ? (

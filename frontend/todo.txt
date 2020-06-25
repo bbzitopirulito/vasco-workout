@@ -1,6 +1,4 @@
 TODO: 
-- fix some bugs
-- type of class
 - group of classes
 - user filter
 - filter by week
@@ -8,6 +6,8 @@ TODO:
 - waiting list
 
 DONE:
+- fix some bugs
+- type of class
 - refactor frontend
 - organize code
 - limit done

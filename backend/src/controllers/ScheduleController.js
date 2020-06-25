@@ -3,16 +3,16 @@ const User = require("../models/User");
 
 module.exports = {
   async store(req, res) {
-    const { date, limit } = req.body;
+    const { date, limit, type } = req.body;
 
     let ndate = new Date(date);
 
     ndate = ndate.setMonth(ndate.getMonth() + 1);
-    console.log(ndate);
 
     let schedule = await Schedule.create({
       date: ndate,
       limit,
+      type,
     });
     return res.json(schedule);
   },

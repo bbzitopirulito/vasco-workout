@@ -1,22 +1,30 @@
 import React, { useState, useEffect } from "react";
 import DateTimePicker from "react-datetime-picker";
-import { Button, Table, Input, Label, Container, Row, Col } from "reactstrap";
+import {
+  Button,
+  Table,
+  Input,
+  Label,
+  Container,
+  Form,
+  FormGroup,
+} from "reactstrap";
 import api from "../../services/api.js";
 import Dropdown from "react-bootstrap/Dropdown";
 import Menu from "../../components/menu/index.js";
-
-import "../../styles/schedule/index.scss";
 
 const AdminSchedule = () => {
   const [date, setDate] = useState(new Date());
   const [workouts, setWorkouts] = useState([]);
   const [limit, setLimit] = useState(6);
+  const [type, setType] = useState("");
 
   const createSchedule = async () => {
     await api
       .post("/newschedule", {
         date,
         limit,
+        type,
       })
       .then((res) => {
         setWorkouts([...workouts, res.data]);
@@ -48,14 +56,15 @@ const AdminSchedule = () => {
     <>
       <Menu />
       <div className="schedule min-vh-100 mt-5 d-flex flex-column align-items-baseline">
-        <Container className="admin-container border border-secondary rounded">
-          <Table>
+        <Container className="admin-container table-responsive">
+          <Table className="border border-secondary rounded">
             <thead>
               <tr>
                 <th>Dia</th>
                 <th>Hora</th>
                 <th>Pessoas</th>
                 <th>Limite</th>
+                <th>Tipo</th>
                 <th>Mudar</th>
               </tr>
             </thead>
@@ -89,6 +98,7 @@ const AdminSchedule = () => {
                       </Dropdown>
                     </td>
                     <td>{item.limit}</td>
+                    <td>{item.type}</td>
                     <td>
                       <Button
                         color="danger"
@@ -101,28 +111,22 @@ const AdminSchedule = () => {
                 ))}
             </tbody>
           </Table>
-          <Container fluid className="my-3">
-            <Row className="align-items-end">
-              <Col>
-                <DateTimePicker
-                  onChange={(date) => setDate(date)}
-                  value={date}
-                />
-              </Col>
-              <Col>
-                <Label for="password">Limite de pessoas</Label>
-                <Input
-                  onChange={(e) => setLimit(e.target.value)}
-                  value={limit}
-                />
-              </Col>
-            </Row>
-          </Container>
-          <Container fluid className="d-flex justify-content-center my-3">
+          <Form>
+            <FormGroup>
+              <DateTimePicker onChange={(date) => setDate(date)} value={date} />
+            </FormGroup>
+            <FormGroup>
+              <Label for="password">Limite de pessoas</Label>
+              <Input onChange={(e) => setLimit(e.target.value)} value={limit} />
+            </FormGroup>
+            <FormGroup>
+              <Label for="type">Tipo de aula</Label>
+              <Input onChange={(e) => setType(e.target.value)} value={type} />
+            </FormGroup>
             <Button color="primary" onClick={() => createSchedule()}>
               Criar
             </Button>
-          </Container>
+          </Form>
         </Container>
       </div>
     </>
