@@ -1,11 +1,11 @@
 TODO: 
 - fix some bugs
 - type of class
+- group of classes
 - user filter
 - filter by week
 - push notifications via email
 - waiting list
-- group of classes
 
 DONE:
 - refactor frontend

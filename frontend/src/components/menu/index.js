@@ -26,8 +26,8 @@ const Menu = (props) => {
       <Navbar color="light" light expand="md">
         <NavbarBrand href="/">Vasco Workout</NavbarBrand>
         <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto" navbar>
+        <Collapse className="justify-content-end" isOpen={isOpen} navbar>
+          <Nav navbar>
             <NavItem>
               <Button onClick={() => logout()}>Sair</Button>
             </NavItem>
