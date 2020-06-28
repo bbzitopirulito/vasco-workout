@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import DateTimePicker from "react-datetime-picker";
+// import DateTimePicker from "react-datetime-picker";
 import {
   Button,
   Table,
@@ -16,12 +16,15 @@ import {
 } from "reactstrap";
 import api from "../../services/api.js";
 import Dropdown from "react-bootstrap/Dropdown";
+// import TimePicker from "react-time-picker";
+import { KeyboardTimePicker, KeyboardDatePicker } from "@material-ui/pickers";
 import Menu from "../../components/menu/index.js";
 
 const AdminSchedule = () => {
   const [date, setDate] = useState(new Date());
   const [workouts, setWorkouts] = useState([]);
   const [limit, setLimit] = useState(6);
+  const [time, setTime] = useState(new Date());
   const [type, setType] = useState("");
   const [day, setDay] = useState(1);
   const [newGroup, setNewGroup] = useState([]);
@@ -135,71 +138,130 @@ const AdminSchedule = () => {
               </tbody>
             </Table>
           </UncontrolledCollapse>
-          {newGroup.length > 0 && (
-            <Table className="border border-secondary rounded">
-              <thead>
-                <tr>
-                  <th>Dia</th>
-                  <th>Hora</th>
-                  <th>Limite</th>
-                  <th>Tipo</th>
-                  <th>Mudar</th>
-                </tr>
-              </thead>
-              <tbody>
-                {newGroup.length > 0 &&
-                  newGroup.map((item, k) => (
-                    <tr id={k}>
-                      <td>
-                        {new Date(item.date).getDate()}/
-                        {new Date(item.date).getMonth()}/
-                        {new Date(item.date).getFullYear()}
-                      </td>
-                      <td>{new Date(item.date).getHours()}</td>
-                      <td>{item.limit}</td>
-                      <td>{item.type}</td>
-                      <td>
-                        <Button
-                          color="danger"
-                          onClick={() =>
-                            setNewGroup(newGroup.filter((f) => f.i !== item.i))
-                          }
-                        >
-                          Remover
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </Table>
-          )}
+          <div className="d-flex flex-column">
+            {newGroup.length > 0 &&
+              weekDays.map(
+                (d, k) =>
+                  k !== 0 &&
+                  newGroup.filter((f) => f.day === k).length > 0 && (
+                    <>
+                      <Button color="primary my-3" id={`toggler${k}`}>
+                        {d}
+                      </Button>
+                      <UncontrolledCollapse toggler={`#toggler${k}`}>
+                        <Table className="border border-secondary rounded">
+                          <thead>
+                            <tr>
+                              <th>Hora</th>
+                              <th>Limite</th>
+                              <th>Tipo</th>
+                              <th>Mudar</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {newGroup
+                              .filter((f) => f.day === k)
+                              .map((item, i) => (
+                                <tr key={i}>
+                                  <td>
+                                    {new Date(item.time).getHours()}:
+                                    {new Date(item.time).getMinutes()}
+                                  </td>
+                                  <td>{item.limit}</td>
+                                  <td>{item.type}</td>
+                                  <td>
+                                    <Button
+                                      color="danger"
+                                      onClick={() =>
+                                        setNewGroup(
+                                          newGroup.filter((f) => f.i !== item.i)
+                                        )
+                                      }
+                                    >
+                                      Remover
+                                    </Button>
+                                  </td>
+                                </tr>
+                              ))}
+                          </tbody>
+                        </Table>
+                      </UncontrolledCollapse>
+                    </>
+                  )
+              )}
+          </div>
           <Form>
             <FormGroup>
-              {newGroup ? (
-                <UncontrolledDropdown>
-                  <DropdownToggle caret>{weekDays[day]}</DropdownToggle>
-                  <DropdownMenu>
-                    <DropdownItem onClick={() => setDay(1)}>
-                      Segunda
-                    </DropdownItem>
-                    <DropdownItem onClick={() => setDay(2)}>Terça</DropdownItem>
-                    <DropdownItem onClick={() => setDay(3)}>
-                      Quarta
-                    </DropdownItem>
-                    <DropdownItem onClick={() => setDay(4)}>
-                      Quinta
-                    </DropdownItem>
-                    <DropdownItem onClick={() => setDay(5)}>Sexta</DropdownItem>
-                    <DropdownItem onClick={() => setDay(6)}>
-                      Sábado
-                    </DropdownItem>
-                  </DropdownMenu>
-                </UncontrolledDropdown>
+              {newGroup.length > 0 ? (
+                <>
+                  <UncontrolledDropdown>
+                    <DropdownToggle caret>{weekDays[day]}</DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem onClick={() => setDay(1)}>
+                        Segunda
+                      </DropdownItem>
+                      <DropdownItem onClick={() => setDay(2)}>
+                        Terça
+                      </DropdownItem>
+                      <DropdownItem onClick={() => setDay(3)}>
+                        Quarta
+                      </DropdownItem>
+                      <DropdownItem onClick={() => setDay(4)}>
+                        Quinta
+                      </DropdownItem>
+                      <DropdownItem onClick={() => setDay(5)}>
+                        Sexta
+                      </DropdownItem>
+                      <DropdownItem onClick={() => setDay(6)}>
+                        Sábado
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
+                  <KeyboardTimePicker
+                    margin="normal"
+                    id="time-picker"
+                    variant="inline"
+                    label="Escolha uma hora"
+                    value={time}
+                    onChange={(t) => setTime(t)}
+                    KeyboardButtonProps={{
+                      "aria-label": "change time",
+                    }}
+                  />
+                </>
               ) : (
-                <DateTimePicker
-                  onChange={(date) => setDate(date)}
-                  value={date}
-                />
+                <>
+                  <KeyboardDatePicker
+                    disableToolbar
+                    variant="inline"
+                    format="dd/MM/yyyy"
+                    margin="normal"
+                    id="date-picker-inline"
+                    label="Escolha uma data"
+                    value={date}
+                    onChange={(d) => setDate(d)}
+                    KeyboardButtonProps={{
+                      "aria-label": "change date",
+                    }}
+                  />
+                  <KeyboardTimePicker
+                    margin="normal"
+                    className="ml-2"
+                    id="time-picker"
+                    variant="inline"
+                    label="Escolha uma hora"
+                    value={date}
+                    onChange={(t) => {
+                      debugger;
+                      setDate(
+                        date.setHours(t.getHours()).setMinutes(t.getMinutes())
+                      );
+                    }}
+                    KeyboardButtonProps={{
+                      "aria-label": "change time",
+                    }}
+                  />
+                </>
               )}
             </FormGroup>
             <FormGroup>
@@ -225,7 +287,7 @@ const AdminSchedule = () => {
                 onClick={() =>
                   setNewGroup([
                     ...newGroup,
-                    { date, type, limit, i: new Date().getMilliseconds() },
+                    { type, limit, day, time, i: new Date().getMilliseconds() },
                   ])
                 }
               >
