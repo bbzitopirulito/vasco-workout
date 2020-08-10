@@ -1,5 +1,6 @@
 const Schedule = require("../models/Schedule");
 const User = require("../models/User");
+const Group = require("../models/Group");
 
 module.exports = {
   async store(req, res) {
@@ -68,5 +69,30 @@ module.exports = {
     const updatedSchedule = await Schedule.findById(scheduleId);
 
     return res.json(updatedSchedule);
+  },
+
+  async createGroup(req, res) {
+    const { newGroup } = req.body;
+
+    // console.log(newGroup[0]);
+
+    // let test = newGroup.forEach;
+    let test = [];
+    newGroup.forEach((f) => {
+      delete f.i;
+      test.push(f);
+    });
+
+    console.log(typeof test);
+
+    try {
+      let newCreatedGroup = await Group.create({
+        group: test,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+
+    // return res.json(newCreatedGroup);
   },
 };

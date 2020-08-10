@@ -23,7 +23,7 @@ import Menu from "../../components/menu/index.js";
 const AdminSchedule = () => {
   const [date, setDate] = useState(new Date());
   const [workouts, setWorkouts] = useState([]);
-  const [limit, setLimit] = useState(6);
+  const [limit, setLimit] = useState("6");
   const [time, setTime] = useState(new Date());
   const [type, setType] = useState("");
   const [day, setDay] = useState(1);
@@ -39,7 +39,11 @@ const AdminSchedule = () => {
     "Sábado",
   ];
 
-  const createGroup = () => {};
+  const createGroup = async () => {
+    await api.post("/newgroup", {
+      newGroup,
+    });
+  };
 
   const createSchedule = async () => {
     await api
@@ -281,18 +285,25 @@ const AdminSchedule = () => {
               >
                 {newGroup.length > 0 ? "Criar grupo" : "Criar"}
               </Button>
-              <Button
+              {/* <Button
                 className="ml-2"
                 color="primary"
                 onClick={() =>
                   setNewGroup([
                     ...newGroup,
-                    { type, limit, day, time, i: new Date().getMilliseconds() },
+                    {
+                      classType: type,
+                      limit,
+                      day,
+                      time,
+                      users: [],
+                      i: new Date().getMilliseconds(),
+                    },
                   ])
                 }
               >
                 Adicionar grupo
-              </Button>
+              </Button> */}
             </FormGroup>
           </Form>
         </Container>

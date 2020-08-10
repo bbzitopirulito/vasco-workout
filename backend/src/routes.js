@@ -7,6 +7,7 @@ const ScheduleController = require("./controllers/ScheduleController");
 const routes = express.Router();
 
 routes.post("/newschedule", ScheduleController.store);
+routes.post("/newgroup", ScheduleController.createGroup);
 routes.post("/newuser", UserController.store);
 routes.get("/user", UserController.getUser);
 routes.get("/schedules", ScheduleController.getSchedules);
